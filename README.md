@@ -6,10 +6,12 @@ This Python script automates AFK farming in Bee Swarm Simulator by simulating ke
 - Simulates holding specific keys (`A`, `S`, `D`, `W`) for a configurable duration.
 - Simulates a left mouse click after each key press.
 - Runs in an infinite loop for continuous automation.
+- Ability to toggle automation on/off with the `F1` key only if Roblox is the active window.
 
 ## Requirements
 - Python 3.7 or newer
 - `pynput` library for simulating keyboard and mouse actions
+- `pygetwindow` library for detecting the active window
 
 ## Installation
 
@@ -21,7 +23,7 @@ This Python script automates AFK farming in Bee Swarm Simulator by simulating ke
 
 2. Install the required Python library:
     ```bash
-    pip install pynput
+    pip install pynput pygetwindow
     ```
 
 3. Run the script:
@@ -39,12 +41,16 @@ This Python script automates AFK farming in Bee Swarm Simulator by simulating ke
     - Hold the `A` key for 0.75 seconds, then simulate a left mouse click.
     - Repeat the process for the `S`, `D`, and `W` keys.
 
-4. To stop the script, press `Ctrl+C`.
+4. To start/stop the automation, press `F1` while Roblox is the active window. If Roblox is not the active window, the script will notify you and will not toggle the automation.
+
+5. To stop the script, press `Ctrl+C`.
 
 ## Code Structure
 - `hold_key(key, duration)`: Simulates holding a keyboard key for a given duration.
 - `left_click()`: Simulates a single left mouse click.
 - `main()`: Automates the sequence of key presses and mouse clicks in a loop.
+- `on_press(key)`: Listens for the `F1` key to toggle the automation on/off.
+
 
 ## Notes
 - This script is for educational purposes only. Ensure it complies with the terms of service of the platform or game you use it for.
@@ -59,3 +65,4 @@ This project is open-source and available under the MIT License.
 
 ## Acknowledgments
 - Created using the [pynput](https://pypi.org/project/pynput/) library for simulating keyboard and mouse input.
+- Uses [pygetwindow](https://pypi.org/project/PyGetWindow/) to detect the active window.

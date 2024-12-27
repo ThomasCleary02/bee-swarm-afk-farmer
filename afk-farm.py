@@ -1,11 +1,14 @@
 import time
-from pynput.keyboard import Controller
+from pynput.keyboard import Controller, Listener, Key
 from pynput.mouse import Controller as MouseController, Button
 import pygetwindow as gw
 
 # Initialize controllers
 keyboard = Controller()
 mouse = MouseController()
+
+# Flag to control automation state
+is_running = False
 
 def is_roblox_active():
     """
@@ -48,6 +51,25 @@ def left_click():
     time.sleep(0.1)           # Short delay to mimic a real click
     mouse.release(Button.left)  # Release left mouse button
 
+def on_press(key):
+    """
+    Listens for key presses. Specifically toggles automation on/off with F1 key.
+    """
+    global is_running
+    try:
+        # Check if 'F1' is pressed to start/stop the automation
+        if key == Key.f1:
+            if is_roblox_active():
+                is_running = not is_running
+                if is_running:
+                    print("Automation started.")
+                else:
+                    print("Automation stopped.")
+            else:
+                print("Roblox is not active.")
+    except AttributeError:
+        pass
+
 def main():
     """
     Main function to automate the key pressing and mouse clicking sequence.
@@ -62,7 +84,7 @@ def main():
         None
     """
     while True:
-        if is_roblox_active():
+        if is_running:
             hold_key('a', 0.75)
             left_click()
             hold_key('s', 0.75)
@@ -71,9 +93,10 @@ def main():
             left_click()
             hold_key('w', 0.75)
             left_click()
-        else:
-            print("Roblox is not the active window. Pausing...")
-            time.sleep(1)  # Check again after 1 second
+
+# Start listening for key presses in a separate thread
+listener = Listener(on_press=on_press)
+listener.start()
 
 if __name__ == "__main__":
     try:
