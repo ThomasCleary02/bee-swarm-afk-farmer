@@ -1,10 +1,23 @@
 import time
 from pynput.keyboard import Controller
 from pynput.mouse import Controller as MouseController, Button
+import pygetwindow as gw
 
 # Initialize controllers
 keyboard = Controller()
 mouse = MouseController()
+
+def is_roblox_active():
+    """
+    Check if the active window is Roblox.
+    
+    Returns:
+        bool: True if Roblox is the active window, False otherwise.
+    """
+    active_window = gw.getActiveWindow()
+    if active_window is not None:
+        return "Roblox" in active_window.title
+    return False
 
 def hold_key(key, duration):
     """
@@ -49,14 +62,18 @@ def main():
         None
     """
     while True:
-        hold_key('a', 0.75)
-        left_click()
-        hold_key('s', 0.75)
-        left_click()
-        hold_key('d', 0.75)
-        left_click()
-        hold_key('w', 0.75)
-        left_click()
+        if is_roblox_active():
+            hold_key('a', 0.75)
+            left_click()
+            hold_key('s', 0.75)
+            left_click()
+            hold_key('d', 0.75)
+            left_click()
+            hold_key('w', 0.75)
+            left_click()
+        else:
+            print("Roblox is not the active window. Pausing...")
+            time.sleep(1)  # Check again after 1 second
 
 if __name__ == "__main__":
     try:
