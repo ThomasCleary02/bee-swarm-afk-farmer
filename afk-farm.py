@@ -1,4 +1,4 @@
-import time
+import asyncio
 from pynput.keyboard import Controller, Listener, Key
 from pynput.mouse import Controller as MouseController, Button
 import pygetwindow as gw
@@ -7,8 +7,9 @@ import pygetwindow as gw
 keyboard = Controller()
 mouse = MouseController()
 
-# Flag to control automation state
+# Flags to control automation states
 is_running = False
+autoclicker_running = False
 
 def is_roblox_active():
     """
@@ -22,9 +23,9 @@ def is_roblox_active():
         return "Roblox" in active_window.title
     return False
 
-def hold_key(key, duration):
+async def hold_key(key, duration):
     """
-    Simulates holding a keyboard key for a specified duration.
+    Asynchronously simulates holding a keyboard key for a specified duration.
 
     Args:
         key (str): The key to be pressed (e.g., 'a', 's', 'w', 'd').
@@ -34,12 +35,12 @@ def hold_key(key, duration):
         None
     """
     keyboard.press(key)
-    time.sleep(duration)
+    await asyncio.sleep(duration)
     keyboard.release(key)
 
-def left_click():
+async def left_click():
     """
-    Simulates a single left mouse click.
+    Asynchronously simulates a single left mouse click.
 
     This presses and releases the left mouse button with a short delay
     to mimic a real mouse click.
@@ -48,59 +49,66 @@ def left_click():
         None
     """
     mouse.press(Button.left)  # Press left mouse button
-    time.sleep(0.1)           # Short delay to mimic a real click
+    await asyncio.sleep(0.25)  # Short delay to mimic a real click
     mouse.release(Button.left)  # Release left mouse button
+
+async def key_press_loop():
+    """
+    Asynchronous loop for key presses.
+    """
+    global is_running
+    while True:
+        if is_running:
+            await hold_key('a', 0.75)
+            await hold_key('s', 0.75)
+            await hold_key('d', 0.75)
+            await hold_key('w', 0.75)
+        else:
+            await asyncio.sleep(0.1)  # Small delay to prevent high CPU usage
+
+async def autoclick_loop():
+    """
+    Asynchronous loop for mouse autoclicking.
+    """
+    global autoclicker_running
+    while True:
+        if autoclicker_running:
+            await left_click()
+            await asyncio.sleep(0.5)  # Delay between clicks
+        else:
+            await asyncio.sleep(0.1)
 
 def on_press(key):
     """
-    Listens for key presses. Specifically toggles automation on/off with F1 key.
+    Listens for key presses. Specifically toggles automation on/off with F1 and F2 keys.
     """
-    global is_running
+    global is_running, autoclicker_running
     try:
-        # Check if 'F1' is pressed to start/stop the automation
-        if key == Key.f1:
-            if is_roblox_active():
+        if is_roblox_active():
+            if key == Key.f1:
                 is_running = not is_running
-                if is_running:
-                    print("Automation started.")
-                else:
-                    print("Automation stopped.")
-            else:
-                print("Roblox is not active.")
+                print("Automation started." if is_running else "Automation stopped.")
+            elif key == Key.f2:
+                autoclicker_running = not autoclicker_running
+                print("Autoclicker started." if autoclicker_running else "Autoclicker stopped.")
+        else:
+            print("Roblox is not active.")
     except AttributeError:
         pass
 
-def main():
+async def main():
     """
-    Main function to automate the key pressing and mouse clicking sequence.
-
-    The loop will:
-        1. Hold the 'A' key for 0.75 seconds and perform a left mouse click.
-        2. Repeat the same process for keys 'S', 'D', and 'W'.
-
-    The sequence runs in an infinite loop until interrupted by the user.
-
-    Returns:
-        None
+    Main asynchronous entry point for the script.
     """
-    while True:
-        if is_running:
-            hold_key('a', 0.75)
-            left_click()
-            hold_key('s', 0.75)
-            left_click()
-            hold_key('d', 0.75)
-            left_click()
-            hold_key('w', 0.75)
-            left_click()
-
-# Start listening for key presses in a separate thread
-listener = Listener(on_press=on_press)
-listener.start()
+    listener = Listener(on_press=on_press)
+    listener.start()
+    
+    # Run key press loop and autoclick loop concurrently
+    await asyncio.gather(key_press_loop(), autoclick_loop())
 
 if __name__ == "__main__":
     try:
         print("Starting the script. Press Ctrl+C to stop.")
-        main()
+        asyncio.run(main())
     except KeyboardInterrupt:
         print("\nScript stopped.")
