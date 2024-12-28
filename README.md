@@ -33,7 +33,7 @@ This Python script automates AFK farming in Bee Swarm Simulator by simulating ke
 
 3. Run the script:
    ```bash
-   python afk-farm.py
+   python main.py
    ```
 
 ## Usage
@@ -49,12 +49,12 @@ This Python script automates AFK farming in Bee Swarm Simulator by simulating ke
 4. To stop the script, press `Ctrl+C` in the terminal.
 
 ## Code Structure
--`hold_key(key, duration)`: Simulates holding a keyboard key for a specified duration.
--`left_click()`: Simulates a single left mouse click.
--`key_press_loop()`: Runs the key press automation in a loop.
--`autoclick_loop()`: Runs the mouse autoclicker in a loop.
--`is_roblox_active()`: Checks if Roblox is the active window.
--`on_press(key)`: Listens for key presses to toggle automation features.
+- `hold_key(key, duration)`: Simulates holding a keyboard key for a specified duration.
+- `left_click()`: Simulates a single left mouse click.
+- `key_press_loop()`: Runs the key press automation in a loop.
+- `autoclick_loop()`: Runs the mouse autoclicker in a loop.
+- `is_roblox_active()`: Checks if Roblox is the active window.
+- `on_press(key)`: Listens for key presses to toggle automation features.
 
 
 ## Notes
