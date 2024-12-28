@@ -28,7 +28,7 @@ This Python script automates AFK farming in Bee Swarm Simulator by simulating ke
 
 2. Install the required Python library:
     ```bash
-    pip install pynput pygetwindow
+    pip install requirements.txt
     ```
 
 3. Run the script:

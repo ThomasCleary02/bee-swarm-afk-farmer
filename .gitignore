@@ -1,0 +1,58 @@
+# Python-specific ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+.Python
+env/
+venv/
+ENV/
+ENV.bak/
+*.pytest_cache/
+
+# macOS and Windows ignore
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files and folders
+*.tmp
+*.bak
+*.swp
+*.swo
+*.~*
+.idea/
+.vscode/
+
+# Packages
+*.egg
+*.egg-info/
+dist/
+build/
+*.manifest
+
+# Compiled files
+*.so
+*.dll
+*.dylib
+*.bin
+*.o
+
+# Test-related
+.pytest_cache/
+.tox/
+.coverage
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.coverage
+*.hypothesis/
+
+# Miscellaneous
+debug.log
+*.spec
