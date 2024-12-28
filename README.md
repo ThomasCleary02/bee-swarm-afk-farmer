@@ -1,74 +1,134 @@
-# AFK Automation Script for Bee Swarm Simulator
+# Bee Swarm Simulator Automation Script
 
-This Python script automates AFK farming in Bee Swarm Simulator by simulating key presses and mouse clicks in a repeating sequence. It is designed to work seamlessly with minimal setup.
+A Python automation script for Bee Swarm Simulator that provides multiple movement patterns and an autoclicker feature. This script helps automate farming activities while maintaining safety and efficiency.
 
 ## Features
-- **Window Detection**: The script checks if Roblox is the active window before running.
-- **Key Press Automation**: Simulates holding specific keys (`A`, `S`, `D`, `W`) for a configurable duration.
-- **Mouse Autoclicker**: Automates left mouse button clicks.
-- **Toggle Controls**: 
-  - Press `F1` to toggle key press automation.
-  - Press `F2` to toggle the mouse autoclicker.
-- **Asynchronous Execution**: Key presses and mouse clicks are handled concurrently for efficient automation.
+- **Smart Window Detection**: Only runs when Roblox is the active window
+- **Multiple Automation Patterns**:
+  - Pattern 1: Basic square movement (A→S→D→W)
+  - Pattern 2: Extended rectangular movement with diagonal traversal
+  - Pattern 3: Complex pattern with full field coverage
+- **Autoclicker**: Automated left-click functionality with configurable timing
+- **Safety Features**: 
+  - Only one movement pattern can run at a time
+  - All features can be toggled independently
+  - Automatic deactivation when Roblox loses focus
+
+## Controls
+- **F1**: Toggle autoclicker
+- **F2**: Toggle Pattern 1 (Basic square)
+- **F3**: Toggle Pattern 2 (Extended rectangular)
+- **F4**: Toggle Pattern 3 (Complex coverage)
+- **Ctrl+C**: Stop the script
 
 ## Requirements
 - Python 3.7 or newer
-- Libraries:
-  - `pynput` for simulating keyboard and mouse actions
-  - `pygetwindow` for detecting the active window
-  - `asyncio` (built-in with Python 3.7+)
+- Required libraries:
+  - `pynput`: Keyboard and mouse control
+  - `pygetwindow`: Window detection
+  - `colorama`: Colored console output
+  - `asyncio`: Asynchronous execution (included with Python)
 
 ## Installation
 
-1. Clone or download this repository:
-   ```bash
-   git clone https://github.com/ThomasCleary02/bee-swarm-afk-farmer.git
-   cd afk-farming-script
-   ```
+1. Clone the repository:
+```bash
+    git clone https://github.com/ThomasCleary02/bee-swarm-afk-farmer.git
+    cd bee-swarm-afk-farmer
+```
 
-2. Install the required Python library:
-    ```bash
-    pip install requirements.txt
-    ```
-
-3. Run the script:
-   ```bash
-   python main.py
-   ```
+2. Install dependencies:
+```bash
+    pip install -r requirements.txt
+```
 
 ## Usage
 
-1. Launch the script in your terminal.
+1. Start the script:
+python main.py
 
-2. Open Roblox and ensure it is the active window.
+2. Launch Roblox and join Bee Swarm Simulator
 
-3. Use the following controls:
-    - Press **F1** to start/stop key press automation.
-    - Press **F2** to start/stop the mouse autoclicker.
+3. The script will display colored status messages in the console:
+   - Green: Feature activated
+   - Yellow: Feature deactivated
+   - Blue: Roblox window status
+   - Cyan: Warning messages (e.g., when trying to activate multiple patterns)
+   - Red: Script termination
 
-4. To stop the script, press `Ctrl+C` in the terminal.
+## Movement Patterns
+
+### Pattern 1 (F2)
+- Basic square movement
+- Equal duration (0.75s) for each direction
+- Ideal for small field coverage
+
+### Pattern 2 (F3)
+- Extended rectangular pattern
+- Variable durations:
+  - Horizontal movements: 1.0s
+  - Vertical movements: 0.5s
+- Better for medium-sized fields
+
+### Pattern 3 (F4)
+- Complex coverage pattern
+- Combines multiple movement sequences
+- Best for large fields or specific farming patterns
+- Full field traversal with optimal timing
 
 ## Code Structure
-- `hold_key(key, duration)`: Simulates holding a keyboard key for a specified duration.
-- `left_click()`: Simulates a single left mouse click.
-- `key_press_loop()`: Runs the key press automation in a loop.
-- `autoclick_loop()`: Runs the mouse autoclicker in a loop.
-- `is_roblox_active()`: Checks if Roblox is the active window.
-- `on_press(key)`: Listens for key presses to toggle automation features.
 
+The project is organized into several modules:
 
-## Notes
-- This script is for educational purposes only. Ensure it complies with the terms of service of the platform or game you use it for.
-- Adjust the key press durations or add delays if needed to suit your specific use case.
+- `main.py`: Entry point and asyncio event loop management
+- `automation.py`: Core automation functionality and movement patterns
+- `key_listener.py`: Keyboard input handling and toggle logic
+- `util.py`: Utility functions for window detection
+
+## Contributing
+
+Contributions are welcome! Here are some ways you can help:
+
+1. Adding new movement patterns
+2. Optimizing existing patterns
+3. Improving window detection
+4. Adding new features
+5. Bug fixes and performance improvements
+
+Please ensure your code follows the existing structure and includes appropriate documentation.
+
+## Safety Notes
+
+- This script is for educational purposes only
+- Ensure compliance with game terms of service
+- Use reasonable delays to prevent server strain
+- The script only runs when Roblox is the active window to prevent unintended actions
 
 ## Troubleshooting
-- **Keys or clicks not registering**: Ensure the game window is focused when the script is running.
-- **Permission errors**: Run the script with appropriate permissions (e.g., as an administrator if required).
-- **Dependencies** not installed: Ensure all required libraries are installed using `pip`.
+
+Common issues and solutions:
+
+1. **Script not responding to hotkeys**
+   - Ensure Roblox window is active
+   - Check if another pattern is already running
+   - Verify keyboard permissions
+
+2. **Movement patterns not working**
+   - Confirm Roblox is in focus
+   - Check console for status messages
+   - Ensure no conflicting programs are running
+
+3. **Installation problems**
+   - Verify Python version (3.7+)
+   - Run `pip install -r requirements.txt` with administrator privileges
+   - Check for conflicting Python installations
 
 ## License
-This project is open-source and available under the MIT License.
+
+This project is licensed under the MIT License
 
 ## Acknowledgments
-- Created using the [pynput](https://pypi.org/project/pynput/) library for simulating keyboard and mouse input.
-- Uses [pygetwindow](https://pypi.org/project/PyGetWindow/) to detect the active window.
+
+- Built with [pynput](https://pypi.org/project/pynput/) for input simulation
+- Uses [pygetwindow](https://pypi.org/project/PyGetWindow/) for window management
+- Console coloring by [colorama](https://pypi.org/project/colorama/)

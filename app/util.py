@@ -1,3 +1,5 @@
+# util.py
+
 import pygetwindow as gw
 
 def is_roblox_active():
